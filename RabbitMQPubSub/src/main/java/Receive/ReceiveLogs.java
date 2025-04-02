@@ -30,12 +30,12 @@ public class ReceiveLogs {
         String queueName = channel.queueDeclare().getQueue();
         channel.queueBind(queueName, EXCHANGE_NAME, "");
 
-        System.out.println(" [*] Esperando mensajes. Presiona CTRL+C para salir.");
+        System.out.println("Esperando mensajes...");
 
         // Recibir los mensajes
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
-            System.out.println(" [x] Recibido: '" + message + "'");
+            System.out.println(" Mensaje Recibido: '" + message + "'");
         };
 
         // Escuchar la cola

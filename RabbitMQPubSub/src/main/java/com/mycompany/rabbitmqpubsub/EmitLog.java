@@ -19,16 +19,19 @@ public class EmitLog {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost"); // Conectar a RabbitMQ
 
-        try (Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel()) {
+        try (Connection connection = factory.newConnection(); Channel channel = connection.createChannel()) {
             // Declarar el exchange de tipo "fanout"
             channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 
-            String message = argv.length < 1 ? "¡Hola desde el Emisor!" : String.join(" ", argv);
-
-            // Publicar el mensaje
-            channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes("UTF-8"));
-            System.out.println(" [x] Enviado: '" + message + "'");
+            // Ciclo para enviar múltiples mensajes
+            for (int i = 1; i <= 5; i++) {
+                String message = "Este es el mensaje #" + i;
+                // Publicamos el mensaje al exchange
+                channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes("UTF-8"));
+                System.out.println(" [x] Sent '" + message + "'");
+                // Simulamos un pequeño retraso antes de enviar el siguiente mensaje
+                Thread.sleep(1000);  // Espera 1 segundo antes de enviar el siguiente mensaje
+            }
         }
     }
 }
