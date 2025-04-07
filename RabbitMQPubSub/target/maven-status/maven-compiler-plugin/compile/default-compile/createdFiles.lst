@@ -1,1 +1,2 @@
-com\mycompany\rabbitmqpubsub\RabbitMQPubSub.class
+com\mycompany\rabbitmqpubsub\EmitLog.class
+Receive\ReceiveLogs.class
